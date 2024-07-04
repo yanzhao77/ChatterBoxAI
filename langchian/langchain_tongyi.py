@@ -1,4 +1,5 @@
 from langchain.chains.llm import LLMChain
+from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 
 from langchain_community.llms import Tongyi
@@ -14,7 +15,8 @@ prompt1 = ChatPromptTemplate.from_template('{input}')
 os.environ["DASHSCOPE_API_KEY"] = api_key
 llm = Tongyi()
 
-chain_one = LLMChain(llm=llm,prompt=prompt1,verbose=False)
+# chain_one = LLMChain(llm=llm,prompt=prompt1,verbose=False)
+chain_one = prompt1 | llm | StrOutputParser()
 
 print(chain_one.invoke("深圳1998年的情况介绍"))
 print(chain_one.invoke("HTML入门"))
